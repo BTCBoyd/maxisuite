@@ -3,7 +3,7 @@ const AUTH_KEY = 'maxisuite-auth';
 
 // Password hash (SHA-256 of the actual password)
 // Set by Boyd on Feb 12, 2026
-const VALID_PASSWORD_HASH = 'c04165d7efcb7f8929b91450e994bed228fdc6cfa64adc96811dfbe759ac9967';
+const VALID_PASSWORD_HASH = '9097b395a27b338d378c4267e96ca275e4a9f3d33b2074cf6aa332e634551d22';
 
 // Hash password using SHA-256
 async function hashPassword(password) {
