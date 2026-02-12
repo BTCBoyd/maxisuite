@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaxiSuite - Social Media Scheduler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <nav class="bg-gray-800 border-b border-gray-700 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">₿</span>
+                <h1 class="text-xl font-bold text-yellow-500">MaxiSuite</h1>
+            </div>
+            <div class="flex space-x-6">
+                <a href="index.html" class="text-yellow-500 font-medium">Compose</a>
+                <a href="queue.html" class="text-gray-400 hover:text-white">Queue</a>
+                <a href="calendar.html" class="text-gray-400 hover:text-white">Calendar</a>
+                <a href="settings.html" class="text-gray-400 hover:text-white">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-8">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6">
+            <h2 class="text-2xl font-bold mb-6">Compose New Post</h2>
+            
+            <!-- Platform Selector -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-3">Platforms</label>
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" id="platform-x" class="w-5 h-5 text-yellow-500 rounded focus:ring-yellow-500">
+                        <span class="flex items-center space-x-2">
+                            <span class="text-blue-400">𝕏</span>
+                            <span>Twitter/X</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" id="platform-linkedin" class="w-5 h-5 text-yellow-500 rounded focus:ring-yellow-500">
+                        <span class="flex items-center space-x-2">
+                            <span class="text-blue-500">in</span>
+                            <span>LinkedIn</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" id="platform-nostr" class="w-5 h-5 text-yellow-500 rounded focus:ring-yellow-500">
+                        <span class="flex items-center space-x-2">
+                            <span class="text-purple-400">⚡</span>
+                            <span>Nostr</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Post Content -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Post Content</label>
+                <textarea 
+                    id="post-content" 
+                    rows="6" 
+                    class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    placeholder="What's on your mind?"></textarea>
+                <div class="mt-2 text-sm text-gray-400">
+                    <span id="char-count">0</span> characters
+                </div>
+            </div>
+
+            <!-- Schedule -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-3">Schedule</label>
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="schedule-type" value="now" checked class="w-4 h-4 text-yellow-500">
+                        <span>Post Now</span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="schedule-type" value="schedule" class="w-4 h-4 text-yellow-500">
+                        <span>Schedule for Later</span>
+                    </label>
+                </div>
+                <div id="schedule-picker" class="mt-4 hidden">
+                    <input type="datetime-local" id="schedule-time" class="bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
+                </div>
+            </div>
+
+            <!-- Approval -->
+            <div class="mb-6">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input type="checkbox" id="require-approval" class="w-5 h-5 text-yellow-500 rounded">
+                    <span>Require WhatsApp approval before posting</span>
+                </label>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex space-x-4">
+                <button id="btn-post" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold px-6 py-3 rounded-lg">
+                    Post Now
+                </button>
+                <button id="btn-save-draft" class="bg-gray-700 hover:bg-gray-600 text-white font-medium px-6 py-3 rounded-lg">
+                    Save Draft
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="status-message" class="mt-6 hidden"></div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
