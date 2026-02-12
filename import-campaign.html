@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Campaign - MaxiSuite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <nav class="bg-gray-800 border-b border-gray-700 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">₿</span>
+                <h1 class="text-xl font-bold text-yellow-500">MaxiSuite</h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-8">
+        <h2 class="text-2xl font-bold mb-6">Import Campaign</h2>
+
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <p class="text-gray-300 mb-4">
+                Import your approved social media calendar (Feb 12-18) into MaxiSuite.
+            </p>
+            <button id="import-btn" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold px-6 py-3 rounded-lg">
+                Import Feb 12-18 Campaign
+            </button>
+        </div>
+
+        <div id="import-status" class="hidden"></div>
+
+        <div id="preview" class="hidden mt-6">
+            <h3 class="text-xl font-bold mb-4">Preview - Posts to Import:</h3>
+            <div id="preview-content" class="space-y-3"></div>
+            <div class="mt-6 flex space-x-4">
+                <button id="confirm-import" class="bg-green-700 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-lg">
+                    Confirm Import
+                </button>
+                <a href="queue.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold px-6 py-3 rounded-lg inline-block">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/import-campaign.js"></script>
+</body>
+</html>
