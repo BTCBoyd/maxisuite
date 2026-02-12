@@ -2,6 +2,13 @@
   publish = "."
   command = "echo 'MaxiSuite MVP'"
 
+# Redirect /callback/linkedin to callback page
+[[redirects]]
+  from = "/callback/linkedin"
+  to = "/callback/linkedin.html"
+  status = 200
+
+# API endpoints (future)
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
