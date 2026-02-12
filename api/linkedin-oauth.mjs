@@ -55,7 +55,7 @@ export function getAuthorizationUrl(state = Math.random().toString(36).substring
         client_id: clientId,
         redirect_uri: redirectUri,
         state: state,
-        scope: 'w_member_social'
+        scope: 'openid profile email w_member_social'
     });
 
     return `${AUTH_URL}?${params.toString()}`;

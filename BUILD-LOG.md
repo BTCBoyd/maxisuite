@@ -56,3 +56,25 @@
 - Scheduling engine
 - WhatsApp approval workflow
 
+
+**17:15 EST** - Calendar + Import tool complete!
+- ✅ Calendar month view built
+- ✅ Post indicators on calendar days
+- ✅ Click day to see scheduled posts
+- ✅ Import tool for bulk campaign loading
+- ✅ Sample Feb 12 posts included
+- ✅ Ready to load full Feb 12-25 campaign
+
+**Status:** MVP core complete! Queue, Calendar, Import all working.
+**Next:** Boyd can import campaign + review posts before they go live
+
+
+**17:25 EST** - 🎉 LINKEDIN POSTING WORKING! 🎉
+- ✅ Added "Sign In with LinkedIn" product
+- ✅ Re-authorized with new scopes (openid, profile, email, w_member_social)
+- ✅ Found user ID in id_token JWT: `1M2wo28k8b`
+- ✅ Successfully posted to Boyd's LinkedIn! (Post ID: urn:li:share:7427840297356791808)
+- ✅ No need for /v2/me endpoint - decode id_token instead
+
+**Status:** ALL 3 PLATFORMS WORKING! X + Nostr + LinkedIn ✅✅✅
+
