@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Queue - MaxiSuite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <nav class="bg-gray-800 border-b border-gray-700 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">₿</span>
+                <h1 class="text-xl font-bold text-yellow-500">MaxiSuite</h1>
+            </div>
+            <div class="flex space-x-6">
+                <a href="index.html" class="text-gray-400 hover:text-white">Compose</a>
+                <a href="queue.html" class="text-yellow-500 font-medium">Queue</a>
+                <a href="calendar.html" class="text-gray-400 hover:text-white">Calendar</a>
+                <a href="settings.html" class="text-gray-400 hover:text-white">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold">Scheduled Posts</h2>
+            <a href="index.html" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold px-4 py-2 rounded-lg">
+                + New Post
+            </a>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-gray-800 rounded-lg p-4 mb-6">
+            <div class="flex flex-wrap gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 mb-1 block">Status</label>
+                    <select id="filter-status" class="bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending Approval</option>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="posted">Posted</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 mb-1 block">Platform</label>
+                    <select id="filter-platform" class="bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
+                        <option value="all">All Platforms</option>
+                        <option value="x">X (Twitter)</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="nostr">Nostr</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Post Queue -->
+        <div id="post-queue" class="space-y-4">
+            <!-- Posts will be loaded here -->
+            <div class="text-center py-12 text-gray-500">
+                <p class="text-lg">No posts scheduled</p>
+                <p class="text-sm mt-2">Create your first post to get started</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/queue.js"></script>
+</body>
+</html>

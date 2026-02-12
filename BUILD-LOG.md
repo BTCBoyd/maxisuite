@@ -41,3 +41,18 @@
 
 **Next:** Deploy to Netlify + test LinkedIn authorization
 
+
+**16:58 EST** - LinkedIn OAuth complete, posting needs debug
+- ✅ LinkedIn OAuth flow working
+- ✅ Access token secured (60 days)
+- ⏳ LinkedIn POST API timing out (debug tomorrow)
+- ✅ X posting working
+- ✅ Nostr posting working
+
+**Decision:** Ship MVP with X + Nostr tonight, fix LinkedIn tomorrow
+
+**17:02 EST** - Building MVP core features
+- Post queue management
+- Scheduling engine
+- WhatsApp approval workflow
+

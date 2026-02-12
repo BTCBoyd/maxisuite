@@ -131,3 +131,24 @@ function showStatus(message, type) {
         }, 5000);
     }
 }
+
+// Helper: Save post to queue
+function saveToQueue(postData, scheduleType) {
+    const queue = JSON.parse(localStorage.getItem('maxisuite-queue') || '[]');
+    
+    const newPost = {
+        id: 'post_' + Date.now(),
+        content: postData.content,
+        platforms: postData.platforms,
+        scheduledFor: postData.scheduleTime || new Date().toISOString(),
+        requiresApproval: postData.requireApproval,
+        status: postData.requireApproval ? 'pending' : 'scheduled',
+        createdAt: new Date().toISOString(),
+        postedAt: null
+    };
+    
+    queue.push(newPost);
+    localStorage.setItem('maxisuite-queue', JSON.stringify(queue));
+    
+    return newPost;
+}
