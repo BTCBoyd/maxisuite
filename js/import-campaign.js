@@ -1,8 +1,9 @@
 // MaxiSuite - Campaign Import
-// Approved campaign data (Feb 12-18, 2026)
+// Approved campaign data (Feb 12, 2026)
+// Note: ArcadiaB X and Boyd LinkedIn posts require additional credentials
 
 const campaignData = [
-    // WEDNESDAY, FEB 12
+    // WEDNESDAY, FEB 12 - Maxi X Posts
     {
         date: '2026-02-12',
         time: '10:00',
@@ -24,6 +25,8 @@ const campaignData = [
         account: '@Maxibtc2009',
         content: "If you haven't checked out AprenderBitcoin yet: 4 chapters live, Spanish-language Bitcoin fundamentals with Mexican context.\n\nBuilt it with José Carlos Flores (ArcadiaB CEO). Video lessons + exercises.\n\naprenderbitcoin.mx"
     },
+    
+    // WEDNESDAY, FEB 12 - Maxi Nostr Posts
     {
         date: '2026-02-12',
         time: '09:00',
@@ -38,8 +41,10 @@ const campaignData = [
         account: 'Maxi Nostr',
         content: "Mexican real estate: ~$5 trillion USD trapped in 5% annual returns. Bitcoin: 100%+ avg annual growth (10yr). The arbitrage is sitting in front of us."
     },
-
-    // Add more days here...
+    
+    // Note: More days coming once Boyd completes calendar
+    // ArcadiaB X posts skipped (need credentials)
+    // Boyd LinkedIn posts skipped (need credentials + LinkedIn POST fix)
 ];
 
 // Import button handler
@@ -56,9 +61,9 @@ function showPreview() {
         <div class="bg-gray-700 rounded-lg p-4">
             <div class="flex items-center justify-between mb-2">
                 <span class="text-sm font-medium text-yellow-500">${post.date} ${post.time}</span>
-                <span class="text-sm">${getPlatformBadges(post.platforms)}</span>
+                <span class="text-sm">${getPlatformBadges(post.platforms)} - ${post.account}</span>
             </div>
-            <p class="text-white text-sm">${escapeHtml(post.content).substring(0, 100)}...</p>
+            <p class="text-white text-sm">${escapeHtml(post.content).substring(0, 150)}${post.content.length > 150 ? '...' : ''}</p>
         </div>
     `).join('');
     
@@ -92,9 +97,13 @@ document.getElementById('confirm-import')?.addEventListener('click', () => {
     statusDiv.className = 'bg-green-900 border border-green-700 rounded-lg p-4';
     statusDiv.innerHTML = `
         <h3 class="text-xl font-bold text-green-200 mb-2">✅ Campaign Imported Successfully!</h3>
-        <p class="text-green-300 mb-4">${campaignData.length} posts added to queue</p>
+        <p class="text-green-300 mb-4">${campaignData.length} posts added to queue (Maxi X + Maxi Nostr)</p>
+        <p class="text-blue-300 mb-4">Note: ArcadiaB X and LinkedIn posts require additional setup</p>
         <a href="queue.html" class="bg-green-700 hover:bg-green-600 text-white font-bold px-4 py-2 rounded inline-block">
             View Queue →
+        </a>
+        <a href="calendar.html" class="bg-blue-700 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded inline-block ml-2">
+            View Calendar →
         </a>
     `;
     statusDiv.classList.remove('hidden');
