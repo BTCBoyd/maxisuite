@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaxiSuite - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-4">
+        <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
+            <div class="text-center mb-8">
+                <span class="text-5xl">₿</span>
+                <h1 class="text-3xl font-bold text-yellow-500 mt-2">MaxiSuite</h1>
+                <p class="text-gray-400 mt-2">Social Media Scheduler</p>
+            </div>
+
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="w-full bg-gray-700 border border-gray-600 rounded px-4 py-3 text-white focus:outline-none focus:border-yellow-500"
+                        placeholder="Enter password"
+                        autofocus
+                    >
+                </div>
+
+                <button 
+                    type="submit"
+                    class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 rounded-lg transition"
+                >
+                    Login
+                </button>
+
+                <div id="error" class="hidden bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded text-sm">
+                    Invalid password
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

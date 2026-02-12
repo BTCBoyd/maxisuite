@@ -20,6 +20,9 @@
                 <a href="settings.html" class="text-gray-400 hover:text-white">Settings</a>
             </div>
         </div>
+                    <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm">Logout</button>
+            </div>
+        </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-8">
@@ -109,5 +112,7 @@
     </main>
 
     <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script>requireAuth();</script>
 </body>
 </html>
