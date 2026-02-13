@@ -98,6 +98,24 @@ function postToNostr(content) {
     }
 }
 
+function postToFacebook(content) {
+    try {
+        const result = spawnSync(
+            'node',
+            [resolve(process.env.HOME, '.openclaw/workspace/facebook-post-library.mjs'), content],
+            { encoding: 'utf-8', timeout: 30000 }
+        );
+        
+        if (result.status === 0) {
+            return { success: true, output: result.stdout };
+        } else {
+            return { success: false, error: result.stderr || result.stdout };
+        }
+    } catch (err) {
+        return { success: false, error: err.message };
+    }
+}
+
 function postToLinkedIn(content) {
     try {
         // Read credentials
@@ -205,6 +223,18 @@ for (const post of dueNow) {
             log('  ✅ LinkedIn posted successfully');
         } else {
             log(`  ❌ LinkedIn failed: ${result.error}`);
+            allSucceeded = false;
+        }
+    }
+    
+    if (post.platforms.facebook) {
+        log('  → Posting to Facebook...');
+        const result = postToFacebook(post.content);
+        results.facebook = result;
+        if (result.success) {
+            log('  ✅ Facebook posted successfully');
+        } else {
+            log(`  ❌ Facebook failed: ${result.error}`);
             allSucceeded = false;
         }
     }
