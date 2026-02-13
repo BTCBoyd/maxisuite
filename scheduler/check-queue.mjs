@@ -5,7 +5,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import { resolve } from 'path';
 
 const QUEUE_FILE = resolve(process.env.HOME, '.openclaw/workspace/maxisuite-queue.json');
@@ -59,11 +59,17 @@ function shouldPost(scheduledTime) {
 
 function postToX(content) {
     try {
-        const result = execSync(
-            `node ${resolve(process.env.HOME, '.openclaw/workspace/x-post-library.mjs')} "${content.replace(/"/g, '\\"')}"`,
+        const result = spawnSync(
+            'node',
+            [resolve(process.env.HOME, '.openclaw/workspace/x-post-library.mjs'), content],
             { encoding: 'utf-8', timeout: 30000 }
         );
-        return { success: true, output: result };
+        
+        if (result.status === 0) {
+            return { success: true, output: result.stdout };
+        } else {
+            return { success: false, error: result.stderr || result.stdout };
+        }
     } catch (err) {
         return { success: false, error: err.message };
     }
@@ -71,11 +77,22 @@ function postToX(content) {
 
 function postToNostr(content) {
     try {
-        const result = execSync(
-            `node ${resolve(process.env.HOME, '.openclaw/workspace/post-to-nostr.mjs')} --key nsec1n0duj3lz2r5ky39le03xpkk0zsd9len7renckl30zacfgpzrnfzsmm4t9g "${content.replace(/"/g, '\\"')}"`,
+        const result = spawnSync(
+            'node',
+            [
+                resolve(process.env.HOME, '.openclaw/workspace/post-to-nostr.mjs'),
+                '--key',
+                'nsec1n0duj3lz2r5ky39le03xpkk0zsd9len7renckl30zacfgpzrnfzsmm4t9g',
+                content
+            ],
             { encoding: 'utf-8', timeout: 30000 }
         );
-        return { success: true, output: result };
+        
+        if (result.status === 0) {
+            return { success: true, output: result.stdout };
+        } else {
+            return { success: false, error: result.stderr || result.stdout };
+        }
     } catch (err) {
         return { success: false, error: err.message };
     }
