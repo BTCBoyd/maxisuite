@@ -75,15 +75,18 @@ function autoImportCampaign() {
             campaignData.forEach(post => {
                 const scheduledFor = `${post.date}T${post.time}:00-06:00`; // CST
                 
+                // Check if this post was already posted (Feb 12 10 AM)
+                const isPosted = post.date === '2026-02-12' && post.time === '10:00';
+                
                 queue.push({
                     id: 'post_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
                     content: post.content,
                     platforms: post.platforms,
                     scheduledFor: scheduledFor,
                     requiresApproval: false,
-                    status: 'scheduled',
+                    status: isPosted ? 'posted' : 'scheduled',
                     createdAt: new Date().toISOString(),
-                    postedAt: null,
+                    postedAt: isPosted ? '2026-02-12T19:37:00.000Z' : null,
                     account: post.account
                 });
             });
