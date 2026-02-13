@@ -72,7 +72,7 @@ function postToX(content) {
 function postToNostr(content) {
     try {
         const result = execSync(
-            `node ${resolve(process.env.HOME, '.openclaw/workspace/post-to-nostr.mjs')} "${content.replace(/"/g, '\\"')}"`,
+            `node ${resolve(process.env.HOME, '.openclaw/workspace/post-to-nostr.mjs')} --key nsec1n0duj3lz2r5ky39le03xpkk0zsd9len7renckl30zacfgpzrnfzsmm4t9g "${content.replace(/"/g, '\\"')}"`,
             { encoding: 'utf-8', timeout: 30000 }
         );
         return { success: true, output: result };
