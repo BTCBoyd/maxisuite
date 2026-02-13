@@ -191,5 +191,32 @@ window.resetCampaign = function() {
 document.getElementById('filter-status')?.addEventListener('change', renderQueue);
 document.getElementById('filter-platform')?.addEventListener('change', renderQueue);
 
+// Auto-update past posts to "posted" status
+function updatePastPosts() {
+    const queue = loadQueue();
+    const now = new Date();
+    let updated = false;
+    
+    queue.forEach(post => {
+        const scheduledDate = new Date(post.scheduledFor);
+        const hoursPast = (now - scheduledDate) / (1000 * 60 * 60);
+        
+        // If post is more than 1 hour past scheduled time and still marked "scheduled"
+        if (hoursPast > 1 && post.status === 'scheduled') {
+            post.status = 'posted';
+            post.postedAt = post.scheduledFor; // Mark posted at scheduled time
+            updated = true;
+        }
+    });
+    
+    if (updated) {
+        saveQueue(queue);
+        console.log('✅ Updated past posts to "posted" status');
+    }
+}
+
+// Run on page load
+updatePastPosts();
+
 // Initial render
 renderQueue();

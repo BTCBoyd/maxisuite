@@ -543,8 +543,8 @@ function autoImportFullCampaign() {
             const now = new Date();
             const scheduledDate = new Date(scheduledFor);
             
-            // Mark as posted if scheduled time has passed
-            const isPosted = scheduledDate < now;
+            // Mark as posted if scheduled time has passed (add 1 hour buffer for timezone edge cases)
+            const isPosted = (now - scheduledDate) > (60 * 60 * 1000); // 1 hour past scheduled time
             
             queue.push({
                 id: 'post_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
