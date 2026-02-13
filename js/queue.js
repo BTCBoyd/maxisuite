@@ -17,6 +17,19 @@ function renderQueue() {
     const queue = loadQueue();
     const container = document.getElementById('post-queue');
     
+    // Update post count
+    const countEl = document.getElementById('post-count');
+    if (countEl) {
+        const statusCounts = {};
+        queue.forEach(p => {
+            statusCounts[p.status] = (statusCounts[p.status] || 0) + 1;
+        });
+        const countText = Object.entries(statusCounts)
+            .map(([status, count]) => `${count} ${status}`)
+            .join(', ');
+        countEl.textContent = `Total: ${queue.length} posts (${countText})`;
+    }
+    
     // Filter by status and platform
     const statusFilter = document.getElementById('filter-status').value;
     const platformFilter = document.getElementById('filter-platform').value;
@@ -34,6 +47,7 @@ function renderQueue() {
         container.innerHTML = `
             <div class="text-center py-12 text-gray-500">
                 <p class="text-lg">No posts match your filters</p>
+                <p class="text-sm mt-2">Try changing the status or platform filter above</p>
             </div>
         `;
         return;
@@ -160,6 +174,16 @@ window.deletePost = function(id) {
         const updated = queue.filter(p => p.id !== id);
         saveQueue(updated);
         renderQueue();
+    }
+};
+
+// Reset campaign
+window.resetCampaign = function() {
+    if (confirm('This will reload all campaign posts from scratch. Any manual edits will be lost. Continue?')) {
+        localStorage.removeItem('maxisuite-queue');
+        localStorage.removeItem('maxisuite-campaign-imported-full');
+        alert('Campaign reset! Reloading page...');
+        location.reload();
     }
 };
 
