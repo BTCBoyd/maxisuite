@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MaxiSuite Queue Debug</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-8">
+    <h1 class="text-2xl font-bold mb-4">MaxiSuite Queue Debug</h1>
+    
+    <button onclick="showQueue()" class="bg-yellow-500 text-black px-4 py-2 rounded mb-4">
+        Load Queue Data
+    </button>
+    
+    <button onclick="clearAndReload()" class="bg-red-500 text-white px-4 py-2 rounded mb-4 ml-2">
+        Clear & Reload Campaign
+    </button>
+    
+    <div id="output" class="bg-gray-800 p-4 rounded font-mono text-sm whitespace-pre-wrap"></div>
+    
+    <script src="js/auto-import-full-campaign.js"></script>
+    <script>
+        function showQueue() {
+            const queue = JSON.parse(localStorage.getItem('maxisuite-queue') || '[]');
+            const imported = localStorage.getItem('maxisuite-campaign-imported-full');
+            
+            const output = document.getElementById('output');
+            output.textContent = `
+Import Flag: ${imported}
+Total Posts: ${queue.length}
+
+Status Breakdown:
+${getStatusBreakdown(queue)}
+
+First 3 Posts:
+${JSON.stringify(queue.slice(0, 3), null, 2)}
+            `;
+        }
+        
+        function getStatusBreakdown(queue) {
+            const counts = {};
+            queue.forEach(post => {
+                counts[post.status] = (counts[post.status] || 0) + 1;
+            });
+            return Object.entries(counts)
+                .map(([status, count]) => `  ${status}: ${count}`)
+                .join('\n');
+        }
+        
+        function clearAndReload() {
+            localStorage.removeItem('maxisuite-queue');
+            localStorage.removeItem('maxisuite-campaign-imported-full');
+            location.reload();
+        }
+        
+        // Auto-run on load
+        setTimeout(showQueue, 500);
+    </script>
+</body>
+</html>
