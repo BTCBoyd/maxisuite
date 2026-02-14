@@ -51,10 +51,11 @@ function shouldPost(scheduledTime) {
     const now = new Date();
     const scheduled = new Date(scheduledTime);
     
-    // Post if scheduled time is within the last 15 minutes or is now/past
-    const fifteenMinutesAgo = new Date(now.getTime() - 15 * 60 * 1000);
+    // Post if scheduled time is past (up to 24 hours overdue)
+    // This prevents posts from being permanently stuck if scheduler misses the window
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     
-    return scheduled >= fifteenMinutesAgo && scheduled <= now;
+    return scheduled >= twentyFourHoursAgo && scheduled <= now;
 }
 
 function postToX(content) {
@@ -174,6 +175,17 @@ log('=== MaxiSuite Scheduler Check ===');
 
 const queue = loadQueue();
 const now = new Date();
+
+// Mark posts as "missed" if >24 hours overdue
+const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+queue.forEach(post => {
+    if (post.status === 'scheduled' && new Date(post.scheduledFor) < twentyFourHoursAgo) {
+        log(`Marking post ${post.id} as missed (scheduled ${post.scheduledFor})`);
+        post.status = 'missed';
+        post.missedAt = new Date().toISOString();
+    }
+});
+
 const dueNow = queue.filter(post => post.status === 'scheduled' && shouldPost(post.scheduledFor));
 
 log(`Checked queue: ${queue.length} total posts, ${dueNow.length} due now`);
