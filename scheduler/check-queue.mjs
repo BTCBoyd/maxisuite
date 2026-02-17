@@ -60,20 +60,18 @@ function shouldPost(scheduledTime) {
 
 function postToX(content, account) {
     try {
-        // TEMPORARY: Route all posts through @Maxibtc2009 until @arcadiabtc API is upgraded
-        // When @arcadiabtc posts from @Maxibtc2009, it tags the account
-        const scriptPath = resolve(process.env.HOME, '.openclaw/workspace/x-post-library.mjs');
-        
-        // If this is an @arcadiabtc post, ensure it mentions the account
-        let finalContent = content;
-        if (account === '@arcadiabtc' && !content.includes('@arcadiabtc')) {
-            // Already has @arcadiabtc in most content, but ensure it's there
-            finalContent = content;
+        // Route to correct X account script
+        let scriptPath;
+        if (account === '@arcadiabtc') {
+            scriptPath = resolve(process.env.HOME, '.openclaw/workspace/x-post-arcadiabtc.mjs');
+        } else {
+            // Default to @Maxibtc2009
+            scriptPath = resolve(process.env.HOME, '.openclaw/workspace/x-post-library.mjs');
         }
         
         const result = spawnSync(
             'node',
-            [scriptPath, finalContent],
+            [scriptPath, content],
             { encoding: 'utf-8', timeout: 30000 }
         );
         
