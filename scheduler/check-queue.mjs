@@ -58,11 +58,22 @@ function shouldPost(scheduledTime) {
     return scheduled >= twentyFourHoursAgo && scheduled <= now;
 }
 
-function postToX(content) {
+function postToX(content, account) {
     try {
+        // TEMPORARY: Route all posts through @Maxibtc2009 until @arcadiabtc API is upgraded
+        // When @arcadiabtc posts from @Maxibtc2009, it tags the account
+        const scriptPath = resolve(process.env.HOME, '.openclaw/workspace/x-post-library.mjs');
+        
+        // If this is an @arcadiabtc post, ensure it mentions the account
+        let finalContent = content;
+        if (account === '@arcadiabtc' && !content.includes('@arcadiabtc')) {
+            // Already has @arcadiabtc in most content, but ensure it's there
+            finalContent = content;
+        }
+        
         const result = spawnSync(
             'node',
-            [resolve(process.env.HOME, '.openclaw/workspace/x-post-library.mjs'), content],
+            [scriptPath, finalContent],
             { encoding: 'utf-8', timeout: 30000 }
         );
         
@@ -204,8 +215,8 @@ for (const post of dueNow) {
     
     // Post to each platform
     if (post.platforms.x) {
-        log('  → Posting to X...');
-        const result = postToX(post.content);
+        log(`  → Posting to X (${post.account || '@Maxibtc2009'})...`);
+        const result = postToX(post.content, post.account);
         results.x = result;
         if (result.success) {
             log('  ✅ X posted successfully');
