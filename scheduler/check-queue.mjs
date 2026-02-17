@@ -160,7 +160,7 @@ function postToLinkedIn(content) {
         writeFileSync(tmpFile, JSON.stringify(postData));
         
         const result = execSync(
-            `curl -X POST "https://api.linkedin.com/v2/ugcPosts" \
+            `curl -s -X POST "https://api.linkedin.com/v2/ugcPosts" \
             -H "Authorization: Bearer ${token}" \
             -H "Content-Type: application/json" \
             -H "X-Restli-Protocol-Version: 2.0.0" \
