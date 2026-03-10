@@ -10328,3 +10328,13 @@ No posts due, exiting
 Checked queue: 284 total posts, 0 due now
 No posts due, exiting
 [2026-03-10T00:30:27.354Z] Scheduler check complete
+[2026-03-10T00:45:27.121Z] Running scheduler check...
+=== MaxiSuite Scheduler Check ===
+Checked queue: 284 total posts, 0 due now
+No posts due, exiting
+[2026-03-10T00:45:27.400Z] Scheduler check complete
+[2026-03-10T01:00:27.122Z] Running scheduler check...
+=== MaxiSuite Scheduler Check ===
+Checked queue: 284 total posts, 0 due now
+No posts due, exiting
+[2026-03-10T01:00:27.362Z] Scheduler check complete
