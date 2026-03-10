@@ -206,7 +206,24 @@ if (dueNow.length === 0) {
 
 // Process each due post
 for (const post of dueNow) {
-    log(`Processing post ${post.id}: "${post.content.substring(0, 50)}..."`);
+    // Handle both 'content' and 'text' fields for backwards compatibility
+    const postContent = post.content || post.text;
+    
+    if (!postContent) {
+        log(`⚠️ Skipping post ${post.id}: no content or text field found`);
+        post.status = 'failed';
+        post.error = 'Missing content field';
+        post.failedAt = new Date().toISOString();
+        continue;
+    }
+    
+    log(`Processing post ${post.id}: "${postContent.substring(0, 50)}..."`);
+    
+    // Ensure platforms object exists
+    if (!post.platforms) {
+        log(`⚠️ Post ${post.id} missing platforms field, defaulting to X only`);
+        post.platforms = { x: true, nostr: false, linkedin: false };
+    }
     
     const results = {};
     let allSucceeded = true;
@@ -214,7 +231,7 @@ for (const post of dueNow) {
     // Post to each platform
     if (post.platforms.x) {
         log(`  → Posting to X (${post.account || '@Maxibtc2009'})...`);
-        const result = postToX(post.content, post.account);
+        const result = postToX(postContent, post.account);
         results.x = result;
         if (result.success) {
             log('  ✅ X posted successfully');
@@ -226,7 +243,7 @@ for (const post of dueNow) {
     
     if (post.platforms.nostr) {
         log('  → Posting to Nostr...');
-        const result = postToNostr(post.content);
+        const result = postToNostr(postContent);
         results.nostr = result;
         if (result.success) {
             log('  ✅ Nostr posted successfully');
@@ -238,7 +255,7 @@ for (const post of dueNow) {
     
     if (post.platforms.linkedin) {
         log('  → Posting to LinkedIn...');
-        const result = postToLinkedIn(post.content);
+        const result = postToLinkedIn(postContent);
         results.linkedin = result;
         if (result.success) {
             log('  ✅ LinkedIn posted successfully');
@@ -250,7 +267,7 @@ for (const post of dueNow) {
     
     if (post.platforms.facebook) {
         log('  → Posting to Facebook...');
-        const result = postToFacebook(post.content);
+        const result = postToFacebook(postContent);
         results.facebook = result;
         if (result.success) {
             log('  ✅ Facebook posted successfully');
@@ -270,3 +287,9 @@ for (const post of dueNow) {
 saveQueue(queue);
 
 log(`=== Scheduler Complete: ${dueNow.length} posts processed ===`);
+
+// Auto-update dashboard task registry
+try {
+  const MARK_DONE = resolve(process.env.HOME, '.openclaw/workspace/dashboard/mark-task-done.mjs');
+  execSync(`node ${MARK_DONE} "Check ArcadiaB Queue Status"`, { stdio: 'pipe' });
+} catch (e) { /* non-fatal */ }
